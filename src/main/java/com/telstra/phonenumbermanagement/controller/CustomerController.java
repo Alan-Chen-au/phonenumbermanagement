@@ -22,6 +22,8 @@ import com.telstra.phonenumbermanagement.entity.PhoneNumber;
 import com.telstra.phonenumbermanagement.service.CustomerService;
 import com.telstra.phonenumbermanagement.service.PhoneNumberService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class CustomerController {
 	
@@ -32,12 +34,18 @@ public class CustomerController {
 	private PhoneNumberService phoneNumberService; 
 	
 	@GetMapping("/api/v1/customers/{id}")
+	@ApiOperation(value = "Find a customer by id", 
+	  			notes = "Provide an id to look up specifice customer from the Phone Number Management", 
+	  			response = Customer.class)
 	public Customer getCustomer( @PathVariable Long id, HttpServletResponse response ) {
 		Customer c = getCustomer(id); 
 		return c; 
 	}
 	
 	@GetMapping("/api/v1/customers")
+	@ApiOperation(value = "Find customers by ids or emails", 
+				notes = "Provide a list of ids or emails to look up specifice Customers from the Phone Number Management", 
+				response = Customer.class)
 	public List<Customer> getCustomer(@RequestParam(required = true) QueryField queryField, 
 											@RequestParam(required = true) List<String> values) {
 		
@@ -51,6 +59,9 @@ public class CustomerController {
 	}
 	
 	@PatchMapping("/api/v1/customers/{customerId}/phonenumbers/{number}")
+	@ApiOperation(value = "Active a number for a customer", 
+			notes = "Active a phone number for a existing customer. The status of the phone number must be PENDING. ", 
+			response = String.class)
 	public String activePhoneNumber( @PathVariable Long customerId, @PathVariable String number, HttpServletResponse response ) {
 		
 		Customer customer = getCustomer(customerId); 

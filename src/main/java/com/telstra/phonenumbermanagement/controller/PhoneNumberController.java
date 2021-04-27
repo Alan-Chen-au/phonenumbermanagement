@@ -17,6 +17,8 @@ import com.telstra.phonenumbermanagement.common.Status;
 import com.telstra.phonenumbermanagement.entity.PhoneNumber;
 import com.telstra.phonenumbermanagement.service.PhoneNumberService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class PhoneNumberController {
 	
@@ -26,16 +28,22 @@ public class PhoneNumberController {
 	private PhoneNumberService phoneNumberService; 
 	
 	@GetMapping("/api/v1/phonenumbers/{id}")
+	@ApiOperation(value = "Find a Phone Number by id", 
+			notes = "Provide an id to look up a specifice Phone Number from the Phone Number Management", 
+			response = PhoneNumber.class)
 	public PhoneNumber getPhoneNumber(@PathVariable Long id, HttpServletResponse response) {
 		return getPhoneNumber(id);
 	}
 	
 	@GetMapping("/api/v1/phonenumbers")
+	@ApiOperation(value = "Get all Phone Numbers", 
+			notes = "Get all Phone Numbers. You can use the filter - Status to get partial Phone Numbers. pageNumer > 0 && 0 < count <= MAX_COUNT ", 
+			response = PhoneNumber.class)
 	public List<PhoneNumber> getPhoneNumbers(@RequestParam(required = false) Status status, 
 											@RequestParam(required = true) int pageNumber, 
 											@RequestParam(required = true) int count) {
 		
-		if (count > MAX_COUNT) {
+		if (count <= 0 || count > MAX_COUNT) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The MAX count is %s", MAX_COUNT));
 		}
 		
