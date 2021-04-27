@@ -1,12 +1,13 @@
 
-insert into customer (id, name, email, postcode) values (11, 'John', 'john@telstra.com', ''); 
-insert into customer (id, name, email, postcode) values (12, 'Alice',  'alice@telstra.com', ''); 
-insert into customer (id, name, email, postcode) values (13, 'Jack',  'jack@telstra.com', ''); 
-insert into customer (id, name, email, postcode) values (14, 'Lisa',  'lisa@telstra.com', ''); 
-insert into customer (id, name, email, postcode) values (15, 'Olive', 'olive@telstra.com', ''); 
+
+insert into customer (id, name, email, postcode) values (1, 'John', 'john@telstra.com', ''); 
+insert into customer (id, name, email, postcode) values (2, 'Alice',  'alice@telstra.com', ''); 
+insert into customer (id, name, email, postcode) values (3, 'Jack',  'jack@telstra.com', ''); 
+insert into customer (id, name, email, postcode) values (4, 'Lisa',  'lisa@telstra.com', ''); 
+insert into customer (id, name, email, postcode) values (5, 'Olive', 'olive@telstra.com', ''); 
 
 
-insert into phone_number (id, number, imei, status, plan, customer_id ) values (1, '0400001001', '', 'PENDING', 'PERSONAL', 11); 
+insert into phone_number (id, number, imei, status, plan, customer_id ) values (1, '0400001001', '', 'PENDING', 'PERSONAL', 1); 
 insert into phone_number (id, number, imei, status, plan ) values (2, '0400001002', '', 'PENDING', 'PERSONAL'); 
 insert into phone_number (id, number, imei, status, plan ) values (3, '0400001003', '', 'PENDING', 'PERSONAL'); 
 insert into phone_number (id, number, imei, status, plan ) values (4, '0400001004', '', 'PENDING', 'PERSONAL'); 
