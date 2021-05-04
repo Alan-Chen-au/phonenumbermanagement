@@ -127,7 +127,7 @@ public class CustomerControllerTest {
 		PhoneNumber pn = new PhoneNumber(); 
 		pn.setId(1L);
 		pn.setNumber(number2);
-		pn.setStatus(Status.ACTIVED);
+		pn.setStatus(Status.ACTIVE);
 		
 		return pn;
 	}

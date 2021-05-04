@@ -46,7 +46,7 @@ public class CustomerController {
 	@ApiOperation(value = "Find customers by ids or emails", 
 				notes = "Provide a list of ids or emails to look up specifice Customers from the Phone Number Management", 
 				response = Customer.class)
-	public List<Customer> getCustomer(@RequestParam(required = true) QueryField queryField, 
+	public List<Customer> getCustomers(@RequestParam(required = true) QueryField queryField, 
 											@RequestParam(required = true) List<String> values) {
 		
 		if (queryField == QueryField.ids) {
@@ -59,10 +59,10 @@ public class CustomerController {
 	}
 	
 	@PatchMapping("/api/v1/customers/{customerId}/phonenumbers/{number}")
-	@ApiOperation(value = "Active a number for a customer", 
-			notes = "Active a phone number for a existing customer. The status of the phone number must be PENDING. ", 
-			response = String.class)
-	public String activePhoneNumber( @PathVariable Long customerId, @PathVariable String number, HttpServletResponse response ) {
+	@ApiOperation(value = "Activatee a number for a customer", 
+			notes = "Activatee a phone number for a existing customer. The status of the phone number must be PENDING. ", 
+			response = void.class)
+	public void activatePhoneNumber( @PathVariable Long customerId, @PathVariable String number, HttpServletResponse response ) {
 		
 		Customer customer = getCustomer(customerId); 
 		
@@ -75,15 +75,32 @@ public class CustomerController {
 		} 
 		
 		// update phone number status
-		phoneNumber.setStatus(Status.ACTIVED); 
+		phoneNumber.setStatus(Status.ACTIVE); 
 		phoneNumber.setCustomer(customer); 
 		phoneNumberService.save(phoneNumber);
 		
 		// attach this phone number to this customer 
 		customer.getNumbers().add(phoneNumber); 
 		customerService.save(customer); 
+		response.setStatus(204);
+		return; 
 		
-		return number + " has been actived! "; 
+		/* -- https://www.tmforum.org/
+		 
+		 1, HTTP status code: 204; without body content; 
+		 
+		 2, HTTP status code: 200; return body content: {"This phone number has been activated  successfully. "}
+		 
+		 3, HTTP status code: 200; 
+		 
+		    return body content:
+		    {
+		    	number: "040012341234", 
+		 		status: "active", 
+		 		location: "https://gw.telstra.com/api/v1/phonenumbers/040012341234"
+		 	}
+		 
+		 */
 	}
 	
 	private Customer getCustomer(Long id) {
